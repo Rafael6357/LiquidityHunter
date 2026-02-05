@@ -127,3 +127,25 @@
 2026-02-05 15:19:44,999 - core.coinex_client - ERROR - Error obteniendo datos para BTC/USDT: coinex GET https://api.coinex.com/v2/spot/kline?market=BTCUSDT&period=15min&limit=100
 2026-02-05 15:24:46,999 - core.coinex_client - ERROR - Error de autenticación en CoinEx: coinex requires "apiKey" credential
 2026-02-05 15:24:46,999 - core.coinex_client - INFO - El bot continuará en modo solo lectura para análisis de mercado.
+2026-02-05 15:29:49,465 - core.coinex_client - ERROR - Error de autenticación en CoinEx: coinex requires "apiKey" credential
+2026-02-05 15:29:49,465 - core.coinex_client - INFO - El bot continuará en modo solo lectura para análisis de mercado.
+2026-02-05 15:29:59,473 - core.coinex_client - ERROR - Error obteniendo datos para BTC/USDT: coinex GET https://api.coinex.com/v2/spot/kline?market=BTCUSDT&period=15min&limit=100
+2026-02-05 15:35:01,687 - core.coinex_client - ERROR - Error de autenticación en CoinEx: coinex requires "apiKey" credential
+2026-02-05 15:35:01,687 - core.coinex_client - INFO - El bot continuará en modo solo lectura para análisis de mercado.
+2026-02-05 15:40:04,491 - core.coinex_client - ERROR - Error de autenticación en CoinEx: coinex requires "apiKey" credential
+2026-02-05 15:40:04,491 - core.coinex_client - INFO - El bot continuará en modo solo lectura para análisis de mercado.
+2026-02-05 15:40:14,495 - core.coinex_client - ERROR - Error obteniendo datos para BTC/USDT: coinex GET https://api.coinex.com/v2/spot/kline?market=BTCUSDT&period=15min&limit=100
+2026-02-05 15:45:16,774 - core.coinex_client - ERROR - Error de autenticación en CoinEx: coinex requires "apiKey" credential
+2026-02-05 15:45:16,774 - core.coinex_client - INFO - El bot continuará en modo solo lectura para análisis de mercado.
+2026-02-05 15:45:19,399 - core.coinex_client - ERROR - Error obteniendo balance: coinex requires "apiKey" credential
+2026-02-05 15:45:19,400 - core.risk_manager - WARNING - Balance insuficiente para SOL/USDT
+2026-02-05 15:45:19,402 - core.order_executor - INFO - Ejecutando buy Market en SOL/USDT | Cantidad: 0.0
+2026-02-05 15:45:19,402 - core.order_executor - ERROR - Error al ejecutar orden en CoinEx: coinex createOrder() requires the price argument for market buy orders to calculate the total cost to spend(amount * price), alternatively set the createMarketBuyOrderRequiresPrice option or param to False and pass the cost to spend in the amount argument
+2026-02-05 15:50:20,505 - core.coinex_client - ERROR - Error de autenticación en CoinEx: coinex requires "apiKey" credential
+2026-02-05 15:50:20,505 - core.coinex_client - INFO - El bot continuará en modo solo lectura para análisis de mercado.
+2026-02-05 15:50:30,516 - core.coinex_client - ERROR - Error obteniendo datos para BTC/USDT: coinex GET https://api.coinex.com/v2/spot/kline?market=BTCUSDT&period=15min&limit=100
+2026-02-05 15:50:33,743 - core.coinex_client - ERROR - Error obteniendo balance: coinex requires "apiKey" credential
+2026-02-05 15:50:33,743 - core.risk_manager - WARNING - Balance insuficiente para SOL/USDT
+2026-02-05 15:50:33,746 - core.order_executor - INFO - Ejecutando buy Market en SOL/USDT | Cantidad: 0.0
+2026-02-05 15:50:33,746 - core.order_executor - ERROR - Error al ejecutar orden en CoinEx: coinex createOrder() requires the price argument for market buy orders to calculate the total cost to spend(amount * price), alternatively set the createMarketBuyOrderRequiresPrice option or param to False and pass the cost to spend in the amount argument
+2026-02-05 15:52:37,173 - modules.notifier - ERROR - Error enviando a Telegram: {"ok":false,"error_code":504,"description":"Gateway Timeout"}
