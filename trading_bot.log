@@ -100,3 +100,25 @@
 2026-02-05 15:04:05,904 - core.risk_manager - WARNING - Balance insuficiente para SOL/USDT
 2026-02-05 15:04:05,907 - core.order_executor - INFO - Ejecutando buy Market en SOL/USDT | Cantidad: 0.0
 2026-02-05 15:04:05,907 - core.order_executor - ERROR - Error al ejecutar orden en CoinEx: coinex createOrder() requires the price argument for market buy orders to calculate the total cost to spend(amount * price), alternatively set the createMarketBuyOrderRequiresPrice option or param to False and pass the cost to spend in the amount argument
+2026-02-05 15:09:06,808 - core.coinex_client - ERROR - Error de autenticación en CoinEx: coinex requires "apiKey" credential
+2026-02-05 15:09:06,809 - core.coinex_client - INFO - El bot continuará en modo solo lectura para análisis de mercado.
+2026-02-05 15:09:16,824 - core.coinex_client - ERROR - Error obteniendo datos para BTC/USDT: coinex GET https://api.coinex.com/v2/spot/kline?market=BTCUSDT&period=15min&limit=100
+2026-02-05 15:09:18,205 - core.coinex_client - ERROR - Error obteniendo balance: coinex requires "apiKey" credential
+2026-02-05 15:09:18,206 - core.risk_manager - WARNING - Balance insuficiente para ETH/USDT
+2026-02-05 15:09:18,209 - core.order_executor - INFO - Ejecutando buy Market en ETH/USDT | Cantidad: 0.0
+2026-02-05 15:09:18,209 - core.order_executor - ERROR - Error al ejecutar orden en CoinEx: coinex createOrder() requires the price argument for market buy orders to calculate the total cost to spend(amount * price), alternatively set the createMarketBuyOrderRequiresPrice option or param to False and pass the cost to spend in the amount argument
+2026-02-05 15:09:19,856 - core.coinex_client - ERROR - Error obteniendo balance: coinex requires "apiKey" credential
+2026-02-05 15:09:19,857 - core.risk_manager - WARNING - Balance insuficiente para SOL/USDT
+2026-02-05 15:09:19,860 - core.order_executor - INFO - Ejecutando buy Market en SOL/USDT | Cantidad: 0.0
+2026-02-05 15:09:19,860 - core.order_executor - ERROR - Error al ejecutar orden en CoinEx: coinex createOrder() requires the price argument for market buy orders to calculate the total cost to spend(amount * price), alternatively set the createMarketBuyOrderRequiresPrice option or param to False and pass the cost to spend in the amount argument
+2026-02-05 15:14:20,841 - core.coinex_client - ERROR - Error de autenticación en CoinEx: coinex requires "apiKey" credential
+2026-02-05 15:14:20,842 - core.coinex_client - INFO - El bot continuará en modo solo lectura para análisis de mercado.
+2026-02-05 15:14:30,860 - core.coinex_client - ERROR - Error obteniendo datos para BTC/USDT: coinex GET https://api.coinex.com/v2/spot/kline?market=BTCUSDT&period=15min&limit=100
+2026-02-05 15:14:32,386 - core.coinex_client - ERROR - Error obteniendo balance: coinex requires "apiKey" credential
+2026-02-05 15:14:32,387 - core.risk_manager - WARNING - Balance insuficiente para ETH/USDT
+2026-02-05 15:14:32,389 - core.order_executor - INFO - Ejecutando buy Market en ETH/USDT | Cantidad: 0.0
+2026-02-05 15:14:32,389 - core.order_executor - ERROR - Error al ejecutar orden en CoinEx: coinex createOrder() requires the price argument for market buy orders to calculate the total cost to spend(amount * price), alternatively set the createMarketBuyOrderRequiresPrice option or param to False and pass the cost to spend in the amount argument
+2026-02-05 15:14:34,028 - core.coinex_client - ERROR - Error obteniendo balance: coinex requires "apiKey" credential
+2026-02-05 15:14:34,028 - core.risk_manager - WARNING - Balance insuficiente para SOL/USDT
+2026-02-05 15:14:34,030 - core.order_executor - INFO - Ejecutando buy Market en SOL/USDT | Cantidad: 0.0
+2026-02-05 15:14:34,030 - core.order_executor - ERROR - Error al ejecutar orden en CoinEx: coinex createOrder() requires the price argument for market buy orders to calculate the total cost to spend(amount * price), alternatively set the createMarketBuyOrderRequiresPrice option or param to False and pass the cost to spend in the amount argument
