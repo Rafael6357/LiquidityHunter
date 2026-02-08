@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 logger = logging.getLogger(__name__)
 
 class CoinExClient:
-    """Cliente para la API de CoinEx usando CCXT."""
+    """Cliente para la API de CoinEx usando CCXT (Mercado de Futuros)."""
     
     def __init__(self, api_key=None, secret=None):
         self.api_key = api_key
@@ -18,10 +18,21 @@ class CoinExClient:
             'secret': self.secret.strip() if self.secret else None,
             'enableRateLimit': True,
             'options': {
+                'defaultType': 'swap', # Habilitar mercado de futuros (perpetuos)
                 'brokerId': 'LiquidityHunter',
-                'createMarketBuyOrderRequiresPrice': False,
             }
         })
+
+    def set_leverage(self, symbol, leverage=5):
+        """Configura el apalancamiento para un símbolo específico."""
+        try:
+            # CCXT unifica set_leverage para la mayoría de exchanges
+            self.exchange.set_leverage(leverage, symbol)
+            logger.info(f"Apalancamiento configurado a {leverage}x para {symbol}")
+            return True
+        except Exception as e:
+            logger.error(f"Error configurando apalancamiento para {symbol}: {e}")
+            return False
         
     def connect(self):
         """Verifica la conexión y las credenciales."""

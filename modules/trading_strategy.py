@@ -31,8 +31,8 @@ class TradingStrategy:
             })
 
     def run_cycle(self):
-        """Ejecuta un ciclo completo de análisis y trading en CoinEx."""
-        # Usamos el primer cliente solo para obtener datos del mercado (los datos son iguales para todos)
+        """Ejecuta un ciclo completo de análisis y trading en CoinEx Futuros (Temporalidad M5)."""
+        # Usamos el primer cliente solo para obtener datos del mercado
         if not self.account_clients:
             logger.error("No hay cuentas configuradas.")
             return
@@ -41,34 +41,35 @@ class TradingStrategy:
         
         for symbol in self.symbols:
             try:
-                # 1. Obtener datos una sola vez por símbolo
-                df_m15 = base_client.get_rates(symbol, '15m', 100)
+                # 1. Obtener datos en temporalidad M5
+                df_m5 = base_client.get_rates(symbol, '5m', 100)
                 df_h1 = base_client.get_rates(symbol, '1h', 50)
                 
-                if df_m15 is None or df_h1 is None:
+                if df_m5 is None or df_h1 is None:
                     continue
 
-                # 2. Detectar patrón común
+                # 2. Detectar patrón común en M5
                 threshold = 0.35
-                amd = self.detector.detect_amd_cycle(df_m15)
+                amd = self.detector.detect_amd_cycle(df_m5)
                 
                 if not amd or amd['status'] not in ['MANIPULATION_DETECTED', 'MANIPULATION_DOWN', 'MANIPULATION_UP', 'DISTRIBUTION_TREND']:
                     continue
 
                 # 3. Si hay patrón, intentar ejecutar en cada cuenta
-                self._execute_for_all_accounts(symbol, df_m15, df_h1, amd)
+                self._execute_for_all_accounts(symbol, df_m5, df_h1, amd)
 
             except Exception as e:
                 logger.error(f"Error analizando {symbol}: {e}")
 
-    def _execute_for_all_accounts(self, symbol, df_m15, df_h1, amd):
+    def _execute_for_all_accounts(self, symbol, df_m5, df_h1, amd):
         bias = amd['bias']
-        latest_price = df_m15['close'].iloc[-1]
+        latest_price = df_m5['close'].iloc[-1]
         threshold = 0.35
+        leverage = 5 # Apalancamiento máximo solicitado
         
         obs_h1 = self.detector.detect_order_blocks(df_h1, displacement_threshold=threshold)
-        obs_m15 = self.detector.detect_order_blocks(df_m15, displacement_threshold=threshold)
-        all_obs = obs_h1 + obs_m15
+        obs_m5 = self.detector.detect_order_blocks(df_m5, displacement_threshold=threshold)
+        all_obs = obs_h1 + obs_m5
 
         # Lógica de señal compartida
         signal_to_notify = None
@@ -104,14 +105,15 @@ class TradingStrategy:
                 risk_mgr = acc_data['risk']
                 
                 try:
+                    # Configurar apalancamiento antes de operar
+                    client.set_leverage(symbol, leverage)
+                    
                     balance = client.get_balance('USDT')
-                    if side == 'buy':
-                        amount = balance * (self.risk_per_trade / 100)
-                    else:
-                        amount = risk_mgr.calculate_amount(symbol, balance, price)
+                    # Calcular cantidad basada en balance, precio y apalancamiento
+                    amount = risk_mgr.calculate_amount(symbol, balance, price, leverage)
 
                     if risk_mgr.validate_trade(symbol, side, price, sl, tp):
-                        logger.info(f"Ejecutando en cuenta {client.api_key[:5]}... {symbol}")
+                        logger.info(f"Ejecutando en cuenta {client.api_key[:5]}... {symbol} (FUTUROS 5X)")
                         executor.execute_market_order(symbol, side, amount, price, sl, tp)
                 except Exception as e:
                     logger.error(f"Error ejecutando en cuenta {client.api_key[:5]}: {e}")

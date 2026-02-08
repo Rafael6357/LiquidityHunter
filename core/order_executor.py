@@ -10,29 +10,37 @@ class OrderExecutor:
         self.exchange = coinex_client.exchange
 
     def execute_market_order(self, symbol, side, amount, price=None, sl=None, tp=None):
-        """Ejecuta una orden de mercado con SL y TP opcionales."""
+        """Ejecuta una orden de mercado en Futuros con SL y TP opcionales."""
         try:
-            logger.info(f"Ejecutando {side} Market en {symbol} | Cantidad/Costo: {amount}")
+            logger.info(f"Ejecutando {side} Market en FUTUROS {symbol} | Cantidad: {amount}")
             
-            # 1. Ejecutar orden principal
-            # Para CoinEx Market Buy: 'amount' es el costo total en USDT si 'createMarketBuyOrderRequiresPrice' es False
-            # Para Market Sell: 'amount' es la cantidad de crypto.
-            order = self.exchange.create_order(symbol, 'market', side, amount, price)
-            logger.info(f"Orden ejecutada: {order['id']}")
+            # 1. Configurar margen cruzado y apalancamiento antes de operar (si es necesario)
+            # Nota: Esto se suele hacer una vez, pero lo ponemos aquí por seguridad
+            
+            # 2. Ejecutar orden principal
+            # En CCXT para futuros, 'amount' suele ser la cantidad en la moneda base (ej: 0.001 BTC)
+            order = self.exchange.create_order(symbol, 'market', side, amount)
+            logger.info(f"Orden de futuros ejecutada: {order['id']}")
 
-            # 2. Configurar SL/TP (Si el exchange lo soporta vía API o mediante órdenes condicionales)
-            # CoinEx en CCXT suele requerir órdenes separadas para SL/TP
+            # 3. Configurar SL/TP mediante órdenes de cierre (reduce-only)
             if sl:
                 sl_side = 'sell' if side == 'buy' else 'buy'
-                self.exchange.create_order(symbol, 'limit', sl_side, amount, sl, {'stopPrice': sl, 'type': 'stop-limit'})
-                logger.info(f"Stop Loss configurado en {sl}")
+                # En futuros usamos stop-market para mayor seguridad en el cierre
+                self.exchange.create_order(symbol, 'stop_market', sl_side, amount, None, {
+                    'stopPrice': sl,
+                    'reduceOnly': True
+                })
+                logger.info(f"Stop Loss de futuros configurado en {sl}")
             
             if tp:
                 tp_side = 'sell' if side == 'buy' else 'buy'
-                self.exchange.create_order(symbol, 'limit', tp_side, amount, tp)
-                logger.info(f"Take Profit configurado en {tp}")
+                # Take Profit como orden limit con reduceOnly
+                self.exchange.create_order(symbol, 'limit', tp_side, amount, tp, {
+                    'reduceOnly': True
+                })
+                logger.info(f"Take Profit de futuros configurado en {tp}")
 
             return order
         except Exception as e:
-            logger.error(f"Error al ejecutar orden en CoinEx: {e}")
+            logger.error(f"Error al ejecutar orden de futuros en CoinEx: {e}")
             return None
