@@ -9,10 +9,9 @@ logger = logging.getLogger(__name__)
 class CoinExClient:
     """Cliente para la API de CoinEx usando CCXT."""
     
-    def __init__(self):
-        load_dotenv()
-        self.api_key = os.getenv("COINEX_API_KEY")
-        self.secret = os.getenv("COINEX_SECRET")
+    def __init__(self, api_key=None, secret=None):
+        self.api_key = api_key
+        self.secret = secret
         
         self.exchange = ccxt.coinex({
             'apiKey': self.api_key.strip() if self.api_key else None,
