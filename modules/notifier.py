@@ -42,9 +42,9 @@ class TelegramNotifier:
                 success = False
         return success
 
-    def notify_trade(self, symbol, side, price, sl, tp):
+    def notify_trade(self, symbol, side, price, sl, tp, strategy_name="SMC Institutional"):
         """Notifica una nueva operación ejecutada."""
-        header = "NUEVA OPERACION INSTITUCIONAL"
+        header = f"🚀 SEÑAL: {strategy_name.upper()}"
         msg = (
             f"*{header}*\n\n"
             f"*Simbolo:* {symbol}\n"
@@ -52,7 +52,7 @@ class TelegramNotifier:
             f"*Precio Entrada:* {price:.4f}\n"
             f"*Stop Loss:* {sl:.4f}\n"
             f"*Take Profit:* {tp:.4f}\n\n"
-            f"Liquidity Hunter v3.0"
+            f"📊 Liquidity Hunter v3.0"
         )
         return self.send_message(msg)
 
